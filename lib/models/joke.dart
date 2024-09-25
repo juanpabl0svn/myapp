@@ -1,6 +1,5 @@
 import 'dart:math';
 
-
 class Joke {
   String setup;
   String punchline;
@@ -11,8 +10,8 @@ class Joke {
   factory Joke.fromJson(Map<String, dynamic> json) {
     return Joke(
       json['setup'] as String,
-      json['punchline'] as String,  
-      json['rating'] ?? Random().nextInt(3) + 1, 
+      json['punchline'] as String,
+      Random().nextInt(3) + 1,
     );
   }
 
@@ -24,5 +23,3 @@ class Joke {
     };
   }
 }
-
-

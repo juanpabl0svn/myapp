@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/models/joke.dart';
 
 class Stars extends StatelessWidget {
-  final dynamic joke;
+  final Joke joke;
   final int index;
   final Function(int, int) setRating;
 
@@ -18,7 +19,7 @@ class Stars extends StatelessWidget {
       children: List.generate(3, (starIndex) {
         return IconButton(
           icon: Icon(
-            starIndex < joke["rating"] ? Icons.star : Icons.star_border,
+            starIndex < joke.rating ? Icons.star : Icons.star_border,
           ),
           color: Colors.amber,
           onPressed: () {

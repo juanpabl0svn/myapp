@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/models/joke.dart';
 import 'package:myapp/widgets/full_joke.dart';
 
 class FilteredJokesScreen extends StatelessWidget {
-  final List jokes;
+  final List<Joke> jokes;
 
   const FilteredJokesScreen({super.key, required this.jokes});
 

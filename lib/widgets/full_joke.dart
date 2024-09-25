@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/models/joke.dart';
 import 'package:myapp/screens/joke_detail_screen.dart';
 
 class FullJoke extends StatelessWidget {
 
-  final dynamic joke;
+  final Joke joke;
 
   const FullJoke({super.key, required this.joke});
 
@@ -17,8 +18,8 @@ class FullJoke extends StatelessWidget {
       ),
       elevation: 5,
       child: ListTile(
-        title: Text(joke['setup']),
-        subtitle: Text(joke['punchline']),
+        title: Text(joke.setup),
+        subtitle: Text(joke.punchline),
         onTap: () {
           Navigator.push(
             context,

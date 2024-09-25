@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:myapp/core/utils.dart';
+import 'package:myapp/models/joke.dart';
 import 'package:myapp/widgets/filter_button.dart';
 import 'package:myapp/screens/filtered_joke.dart';
 import 'package:myapp/widgets/joke_line.dart';
@@ -16,7 +15,7 @@ class JokesScreen extends StatefulWidget {
 }
 
 class _JokesScreenState extends State<JokesScreen> {
-  List _jokes = [];
+  List<Joke> _jokes = [];
 
   @override
   void initState() {
@@ -25,28 +24,30 @@ class _JokesScreenState extends State<JokesScreen> {
   }
 
   Future<void> _fetchJokes() async {
-    final response = await http
-        .get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      setState(() {
-        _jokes = json.decode(response.body).map((joke) {
-          return {...joke, "rating": Random().nextInt(3) + 1};
-        }).toList();
-      });
-    } else {
-      throw Exception('Failed to load jokes');
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        setState(() {
+          final List<dynamic> jokesData = json.decode(response.body);
+          _jokes = jokesData.map((joke) => Joke.fromJson(joke)).toList();
+        });
+      } else {
+        throw Exception('Failed to load jokes');
+      }
+    } catch (error) {
+      print('Error: $error');
     }
   }
 
   void _setRating(int jokeIndex, int rating) {
     setState(() {
-      _jokes[jokeIndex]["rating"] = rating; // Actualiza la calificación
+      _jokes[jokeIndex].rating = rating; // Actualiza la calificación
     });
   }
 
   void _navigateToFilteredJokes(BuildContext context, int ratingFilter) {
     final filteredJokes = _jokes.where((joke) {
-      return joke["rating"] == ratingFilter;
+      return joke.rating == ratingFilter;
     }).toList();
 
     Navigator.push(
@@ -100,7 +101,11 @@ class _JokesScreenState extends State<JokesScreen> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     elevation: 5,
-                    child: JokeLine(index: index, joke: joke, setRating: _setRating,),
+                    child: JokeLine(
+                      index: index,
+                      joke: joke,
+                      setRating: _setRating,
+                    ),
                   );
                 },
               ),

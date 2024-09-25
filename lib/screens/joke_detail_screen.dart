@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/models/joke.dart';
 
 class JokeDetailScreen extends StatelessWidget {
-  final dynamic joke;
+  final Joke joke;
 
   const JokeDetailScreen({super.key, required this.joke});
 
@@ -45,7 +46,7 @@ class JokeDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    joke['setup'],
+                    joke.setup,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 26,
@@ -60,7 +61,7 @@ class JokeDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    joke['punchline'],
+                    joke.punchline,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 22,
